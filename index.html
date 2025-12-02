@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Système solaire interactif</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="info-panel">
+    <h2 id="planet-name">Clique sur un astre 🌍</h2>
+    <p id="planet-info">Découvre les planètes en cliquant dessus !</p>
+    <div class="slider-container">
+      <label for="speed-range">Vitesse :</label>
+      <input type="range" id="speed-range" min="0.2" max="2" step="0.1" value="1">
+      <span id="speed-value">1x</span>
+    </div>
+    <div class="slider-container">
+      <label for="zoom-range">Zoom :</label>
+      <input type="range" id="zoom-range" min="0.5" max="2.5" step="0.1" value="1">
+      <span id="zoom-value">1x</span>
+    </div>
+<div class="controls-row">
+  <button id="toggle-sound" class="control-btn">🔊 Son : ON</button>
+  <button id="toggle-system" class="control-btn">⏸️ Pause système</button>
+</div>
+  </div>
+  
+  <div class="space-container">
+    <div class="space">
+      <div class="sun" data-name="Soleil"></div>
+      <div class="planet mercury" data-name="Mercure"></div>
+      <div class="planet venus" data-name="Vénus"></div>
+      <div class="planet earth" data-name="Terre"></div>
+      <div class="planet mars" data-name="Mars"></div>
+      <div class="planet jupiter" data-name="Jupiter"></div>
+      <div class="planet saturn" data-name="Saturne">
+  <div class="ring"></div>
+</div>
+      <div class="planet uranus" data-name="Uranus"></div>
+      <div class="planet neptune" data-name="Neptune"></div>
+    </div>
+  </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
