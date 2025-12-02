@@ -1,1 +1,195 @@
+/* style.css - version améliorée */
 
+/* Reset & fond */
+body {
+  margin: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #000010, #000);
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* Container central */
+.space-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Espace où tout est positionné (origine centre) */
+.space {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  transform-origin: 50% 50%;
+  transition: transform 0.25s ease;
+  overflow: visible;
+}
+
+/* Etoiles (créées en JS) */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.35;
+  animation: twinkle 3s infinite alternate;
+}
+
+/* Animation scintillante */
+@keyframes twinkle {
+  from { opacity: 0.2; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1.3); }
+}
+
+/* Soleil */
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle at 30% 30%, #fff6c8, #ffcc33 40%, #ff6600 70%);
+  border-radius: 50%;
+  box-shadow: 0 0 80px 30px rgba(255,200,50,0.7), inset 0 -10px 30px rgba(255,140,0,0.2);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* Orbits visibles (cercles autour du centre) */
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px dashed rgba(255,255,255,0.04);
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(255,255,255,0.01) inset;
+}
+
+/* Planètes (chaque planète est positionnée via transform en JS) */
+.planet {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translate(-50%, -50%); /* fallback until JS places them */
+  will-change: transform;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 0 10px rgba(255,255,255,0.02);
+}
+
+/* Tailles / couleurs planétaires */
+.mercury { width: 10px; height: 10px; background: linear-gradient(180deg,#9b9b9b,#7a7a7a); }
+.venus   { width: 18px; height: 18px; background: linear-gradient(180deg,#e6a34e,#d97e2f); }
+.earth   { width: 20px; height: 20px; background: radial-gradient(circle at 30% 30%, #74c7ff,#0b6ed6); box-shadow: 0 0 10px rgba(50,150,255,0.12); }
+.mars    { width: 16px; height: 16px; background: linear-gradient(180deg,#e0644a,#b93b2a); }
+.jupiter { width: 35px; height: 35px; background: radial-gradient(circle at 30% 30%, #f0d9b6,#c17a3a); }
+.saturn  { width: 30px; height: 30px; background: radial-gradient(circle at 30% 30%, #fff2c8,#caa86a); position: relative; z-index: 3; }
+.uranus  { width: 26px; height: 26px; background: linear-gradient(180deg,#cdeff8,#7fc7d1); }
+.neptune { width: 24px; height: 24px; background: linear-gradient(180deg,#7aa6ff,#2b63d8); }
+
+/* Anneaux de Saturne (élément interne) */
+.saturn .ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 86px;
+  height: 32px;
+  transform: translate(-50%, -50%) rotate(18deg);
+  border-radius: 50%;
+  background: conic-gradient(
+    rgba(255,255,220,0.35),
+    rgba(220,200,150,0.25),
+    rgba(200,170,120,0.18)
+  );
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(0.25px);
+  mix-blend-mode: screen;
+}
+.saturn .ring::after {
+  content: "";
+  position: absolute;
+  inset: 7px 6px;
+  border-radius: 50%;
+  background: rgba(255,255,210,0.12);
+  pointer-events: none;
+}
+
+/* Lune (style générique) */
+.moon {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: #f6f6f6;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255,255,255,0.8);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Panneau d'information */
+#info-panel {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  padding: 15px;
+  width: 330px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.06);
+  z-index: 20;
+}
+#info-panel h2 { margin: 0 0 6px 0; font-size: 18px; }
+#info-panel p { font-size: 14px; line-height: 1.4; margin: 0 0 10px 0; }
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  margin-top: 6px;
+}
+#speed-range, #zoom-range { width: 120px; }
+
+/* Controls */
+.controls-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: flex-start;
+}
+.control-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  transition: transform .12s ease, background .12s ease;
+}
+.control-btn:hover { transform: translateY(-2px); }
+.control-btn:active { transform: translateY(0); }
+.control-btn.off {
+  background: rgba(255,0,0,0.12);
+  border-color: rgba(255,0,0,0.25);
+  color: #ffdddd;
+}
+.control-btn.paused {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.18);
+}
+
+/* Responsive minor */
+@media (max-width: 520px) {
+  #info-panel { width: calc(100vw - 24px); left: 12px; right: 12px; }
+}
