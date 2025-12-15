@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Système solaire – v7 (DANGER)</title>
+  <title>Système solaire – v7 FULL (DANGER)</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 
 <body>
-  <!-- ===== FOND ÉTOILÉ FIXE ===== -->
+  <!-- ===== FOND ÉTOILÉ FIXE (plein écran, ne "vide" pas au zoom) ===== -->
   <div class="stars-layer"></div>
 
-  <!-- ===== OVERLAYS D'EFFETS ===== -->
+  <!-- ===== OVERLAYS ===== -->
   <div id="white-flash" class="white-flash"></div>
   <div id="blackout" class="blackout"></div>
 
@@ -59,7 +59,7 @@
     </div>
   </div>
 
-  <!-- ===== BOUTONS FIXES BAS DROITE ===== -->
+  <!-- ===== BOUTONS BAS DROITE ===== -->
   <button id="danger-btn" class="danger-btn">☢️ DANGER</button>
   <button id="reset-btn" class="reset-btn">🔄 Réinitialiser</button>
 
@@ -73,17 +73,17 @@
       color: white;
     }
 
-    /* --- FOND ÉTOILÉ --- */
+    /* --- Fond étoilé fixe --- */
     .stars-layer {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
+      inset: 0;
       z-index: 0;
       pointer-events: none;
     }
     .star {
       position: absolute;
-      width: 2px; height: 2px;
+      width: 2px;
+      height: 2px;
       background: white;
       border-radius: 50%;
       opacity: 0.4;
@@ -91,7 +91,7 @@
     }
     @keyframes twinkle { from { opacity: 0.25; } to { opacity: 1; } }
 
-    /* --- OVERLAYS --- */
+    /* --- Overlays --- */
     .white-flash {
       position: fixed;
       inset: 0;
@@ -109,30 +109,27 @@
       pointer-events: none;
     }
 
-    /* --- SYSTÈME --- */
+    /* --- Système solaire --- */
     .space-container {
-      width: 100vw; height: 100vh;
+      width: 100vw;
+      height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       position: relative;
       z-index: 2;
     }
     .space {
       position: relative;
-      width: 100vw; height: 100vh;
+      width: 100vw;
+      height: 100vh;
       transform-origin: center center;
       transition: transform 0.25s ease;
       --zoom: 1;
-      filter: none;
     }
-
-    /* Mode chaos: un petit glitch visuel */
     .space.glitch {
-      filter: contrast(1.35) saturate(1.5) hue-rotate(18deg);
+      filter: contrast(1.35) saturate(1.6) hue-rotate(18deg);
     }
-
-    /* Shake caméra (garde le zoom via --zoom) */
     .space.shake {
       animation: shake 0.35s linear 1;
     }
@@ -145,7 +142,7 @@
       100% { transform: translate(0,0) scale(var(--zoom)); }
     }
 
-    /* ORBITES */
+    /* --- Orbites --- */
     .orbit {
       position: absolute;
       top: 50%;
@@ -160,8 +157,10 @@
 
     .sun {
       position: absolute;
-      top: 50%; left: 50%;
-      width: 100px; height: 100px;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
       background: radial-gradient(circle, #ffcc33, #ff6600);
       border-radius: 50%;
       box-shadow: 0 0 40px 20px rgba(255,200,50,0.8);
@@ -172,7 +171,8 @@
 
     .planet {
       position: absolute;
-      top: 50%; left: 50%;
+      top: 50%;
+      left: 50%;
       border-radius: 50%;
       cursor: pointer;
       z-index: 2;
@@ -188,7 +188,8 @@
     .neptune { width: 24px; height: 24px; background: royalblue; }
 
     .saturn {
-      width: 30px; height: 30px;
+      width: 30px;
+      height: 30px;
       background: khaki;
       border-radius: 50%;
       position: relative;
@@ -196,8 +197,10 @@
     }
     .saturn .ring {
       position: absolute;
-      top: 50%; left: 50%;
-      width: 80px; height: 28px;
+      top: 50%;
+      left: 50%;
+      width: 80px;
+      height: 28px;
       transform: translate(-50%, -50%) rotate(18deg);
       border-radius: 50%;
       background: conic-gradient(
@@ -212,7 +215,8 @@
 
     .moon {
       position: absolute;
-      width: 7px; height: 7px;
+      width: 7px;
+      height: 7px;
       background: white;
       border-radius: 50%;
       box-shadow: 0 0 8px rgba(255,255,255,.8);
@@ -220,10 +224,11 @@
       will-change: transform, opacity;
     }
 
-    /* PANNEAU */
+    /* --- Panneau --- */
     #info-panel {
       position: absolute;
-      top: 10px; left: 10px;
+      top: 10px;
+      left: 10px;
       background: rgba(0,0,0,0.7);
       border-radius: 10px;
       padding: 15px;
@@ -244,7 +249,12 @@
       margin-top: 6px;
       font-size: 13px;
     }
-    .controls-row { display: flex; gap: 10px; margin-top: 10px; }
+
+    .controls-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
 
     .control-btn {
       padding: 8px 12px;
@@ -254,11 +264,13 @@
       color: white;
       cursor: pointer;
       font-size: 13px;
+      transition: transform .12s ease;
     }
+    .control-btn:hover { transform: translateY(-1px); }
     .control-btn.off { background: rgba(255,0,0,0.15); }
     .control-btn.paused { background: rgba(255,255,255,0.1); }
 
-    /* PARTICULES */
+    /* --- Particules / onde de choc --- */
     .particle {
       position: absolute;
       width: 4px;
@@ -270,8 +282,21 @@
       z-index: 6;
       will-change: transform, opacity;
     }
+    .shockwave {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.95);
+      transform: translate(-50%, -50%) scale(0.1);
+      pointer-events: none;
+      z-index: 7;
+      box-shadow: 0 0 25px rgba(255,255,255,0.75), inset 0 0 20px rgba(255,255,255,0.55);
+    }
 
-    /* BOUTON DANGER (bas droite) */
+    /* --- Boutons bas droite --- */
     .danger-btn {
       position: fixed;
       right: 18px;
@@ -288,10 +313,7 @@
       backdrop-filter: blur(6px);
       box-shadow: 0 10px 30px rgba(255, 0, 0, 0.18);
     }
-    .danger-btn:hover { transform: translateY(-1px); }
-    .danger-btn:active { transform: translateY(0); }
 
-    /* BOUTON RESET (visible uniquement après blackout) */
     .reset-btn {
       position: fixed;
       right: 18px;
@@ -305,8 +327,8 @@
       font-weight: 700;
       cursor: pointer;
       backdrop-filter: blur(6px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      display: none; /* caché au départ */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      display: none;
     }
   </style>
 
@@ -315,8 +337,8 @@
     const planets = document.querySelectorAll(".planet");
     const sun = document.querySelector(".sun");
     const space = document.querySelector(".space");
-
     const infoPanel = document.getElementById("info-panel");
+
     const planetName = document.getElementById("planet-name");
     const planetText = document.getElementById("planet-info");
 
@@ -328,15 +350,16 @@
 
     const planetOrbits = [];
     const orbitElements = [];
-    let orbitsVisible = false;
 
+    let orbitsVisible = false;
     let globalSpeed = 1;
     let zoomLevel = 1;
+
     let soundEnabled = true;
     let systemPaused = false;
     let dangerUsed = false;
 
-    /* --- ÉTOILES (fond plein écran) --- */
+    /* --- Étoiles fixes plein écran --- */
     const starsLayer = document.querySelector(".stars-layer");
     for (let i = 0; i < 320; i++) {
       const star = document.createElement("div");
@@ -347,7 +370,7 @@
       starsLayer.appendChild(star);
     }
 
-    /* --- INFOS --- */
+    /* --- Infos (panneau) --- */
     const planetInfo = {
       Soleil: `⭐ <b>Type :</b> Étoile naine jaune (G2V)<br>🌡️ <b>Température :</b> 5 500 °C<br>⚡ <b>Âge :</b> 4,6 milliards d'années<br>💥 <b>Rôle :</b> Source d'énergie du système solaire`,
       Mercure: `🟠 <b>Distance :</b> 58 millions km<br>⏱️ <b>Année :</b> 88 jours<br>🌡️ <b>Température :</b> -180°C à +430°C<br>🧱 <b>Composition :</b> Roche métallique`,
@@ -365,7 +388,7 @@
       planetText.innerHTML = planetInfo[name] || "Aucune information disponible.";
     }
 
-    /* --- ORBITES VISUELLES + ANIMATIONS --- */
+    /* --- ORBITES VISUELLES --- */
     function createOrbitShape(dx, dy) {
       const o = document.createElement("div");
       o.className = "orbit";
@@ -375,6 +398,7 @@
       orbitElements.push(o);
     }
 
+    /* --- ANIMATIONS DES PLANÈTES --- */
     function orbit(planet, dx, dy, duration) {
       const anim = anime({
         targets: planet,
@@ -391,14 +415,14 @@
       planetOrbits.push({ anim, baseDuration: duration });
     }
 
-    orbit(document.querySelector(".mercury"), 100, 100, 4000);  createOrbitShape(100, 100);
-    orbit(document.querySelector(".venus"),   150, 150, 7000);  createOrbitShape(150, 150);
-    orbit(document.querySelector(".earth"),   210, 210, 10000); createOrbitShape(210, 210);
-    orbit(document.querySelector(".mars"),    260, 260, 13000); createOrbitShape(260, 260);
-    orbit(document.querySelector(".jupiter"), 330, 330, 20000); createOrbitShape(330, 330);
-    orbit(document.querySelector(".saturn"),  400, 400, 25000); createOrbitShape(400, 400);
-    orbit(document.querySelector(".uranus"),  470, 470, 30000); createOrbitShape(470, 470);
-    orbit(document.querySelector(".neptune"), 540, 540, 35000); createOrbitShape(540, 540);
+    orbit(document.querySelector(".mercury"), 100, 100, 4000);   createOrbitShape(100, 100);
+    orbit(document.querySelector(".venus"),   150, 150, 7000);   createOrbitShape(150, 150);
+    orbit(document.querySelector(".earth"),   210, 210, 10000);  createOrbitShape(210, 210);
+    orbit(document.querySelector(".mars"),    260, 260, 13000);  createOrbitShape(260, 260);
+    orbit(document.querySelector(".jupiter"), 330, 330, 20000);  createOrbitShape(330, 330);
+    orbit(document.querySelector(".saturn"),  400, 400, 25000);  createOrbitShape(400, 400);
+    orbit(document.querySelector(".uranus"),  470, 470, 30000);  createOrbitShape(470, 470);
+    orbit(document.querySelector(".neptune"), 540, 540, 35000);  createOrbitShape(540, 540);
 
     /* --- LUNE --- */
     const earth = document.querySelector(".earth");
@@ -418,7 +442,7 @@
       }
     });
 
-    /* --- SONS + unlock --- */
+    /* --- SONS --- */
     const planetSounds = {
       Soleil: new Audio("sun.mp3"),
       Mercure: new Audio("mercury.mp3"),
@@ -430,11 +454,15 @@
       Uranus: new Audio("uranus.mp3"),
       Neptune: new Audio("neptune.mp3")
     };
+    const explosionSound = new Audio("explosion.mp3");
+    explosionSound.volume = 1;
 
     function stopAllSounds() {
       Object.values(planetSounds).forEach(s => { s.pause(); s.currentTime = 0; });
+      explosionSound.pause(); explosionSound.currentTime = 0;
     }
 
+    /* iOS/Safari unlock */
     let audioUnlocked = false;
     function unlockAudio() {
       if (audioUnlocked) return;
@@ -443,6 +471,10 @@
         sound.pause();
         sound.currentTime = 0;
       });
+      explosionSound.play().catch(()=>{});
+      explosionSound.pause();
+      explosionSound.currentTime = 0;
+
       audioUnlocked = true;
     }
     window.addEventListener("touchstart", unlockAudio, { once: true });
@@ -454,7 +486,7 @@
       planetSounds[name]?.play().catch(()=>{});
     }
 
-    /* --- CLICS --- */
+    /* --- CLICS (info + son) --- */
     planets.forEach(p => {
       p.addEventListener("click", (e) => {
         if (dangerUsed) return;
@@ -463,13 +495,14 @@
         playSound(name);
       });
     });
+
     sun.addEventListener("click", () => {
       if (dangerUsed) return;
       showInfo("Soleil");
       playSound("Soleil");
     });
 
-    /* --- SLIDERS --- */
+    /* --- SLIDERS + ZOOM --- */
     const speedRange = document.getElementById("speed-range");
     const speedValue = document.getElementById("speed-value");
     speedRange.addEventListener("input", e => {
@@ -503,7 +536,7 @@
       applyZoom();
     }, { passive: false });
 
-    /* --- BOUTONS V6 --- */
+    /* --- Bouton SON --- */
     const toggleSoundBtn = document.getElementById("toggle-sound");
     toggleSoundBtn.addEventListener("click", () => {
       if (dangerUsed) return;
@@ -513,6 +546,7 @@
       if (!soundEnabled) stopAllSounds();
     });
 
+    /* --- Bouton PAUSE --- */
     const toggleSystemBtn = document.getElementById("toggle-system");
     toggleSystemBtn.addEventListener("click", () => {
       if (dangerUsed) return;
@@ -532,6 +566,7 @@
       }
     });
 
+    /* --- Bouton ORBITES 💫 --- */
     const toggleOrbitsBtn = document.getElementById("toggle-orbits");
     toggleOrbitsBtn.addEventListener("click", () => {
       if (dangerUsed) return;
@@ -540,7 +575,7 @@
       toggleOrbitsBtn.textContent = orbitsVisible ? "💫 Orbites : ON" : "💫 Orbites : OFF";
     });
 
-    /* ====== DANGER MODE : EFFETS "FOLIE" ====== */
+    /* ===== DANGER MODE ===== */
     function flashWhite() {
       anime({
         targets: whiteFlash,
@@ -551,23 +586,37 @@
       });
     }
 
+    function shockwaveExplosion() {
+      const wave = document.createElement("div");
+      wave.className = "shockwave";
+      space.appendChild(wave);
+      anime({
+        targets: wave,
+        scale: [0.1, 25],
+        opacity: [1, 0],
+        duration: 900,
+        easing: "easeOutExpo",
+        complete: () => wave.remove()
+      });
+    }
+
     function spawnParticlesAround(el, count = 40) {
-      const elRect = el.getBoundingClientRect();
-      const spRect = space.getBoundingClientRect();
-      const ox = (elRect.left + elRect.width / 2) - spRect.left;
-      const oy = (elRect.top + elRect.height / 2) - spRect.top;
+      const rect = el.getBoundingClientRect();
+      const parentRect = space.getBoundingClientRect();
+      const originX = (rect.left + rect.width / 2) - parentRect.left;
+      const originY = (rect.top + rect.height / 2) - parentRect.top;
 
       for (let i = 0; i < count; i++) {
         const p = document.createElement("div");
         p.className = "particle";
-        p.style.left = ox + "px";
-        p.style.top = oy + "px";
+        p.style.left = originX + "px";
+        p.style.top = originY + "px";
         space.appendChild(p);
 
-        const a = Math.random() * Math.PI * 2;
-        const dist = 180 + Math.random() * 500;
-        const dx = Math.cos(a) * dist;
-        const dy = Math.sin(a) * dist;
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 180 + Math.random() * 520;
+        const dx = Math.cos(angle) * dist;
+        const dy = Math.sin(angle) * dist;
 
         anime({
           targets: p,
@@ -581,6 +630,17 @@
           complete: () => p.remove()
         });
       }
+    }
+
+    function suckIntoSun(el, delay = 0) {
+      anime({
+        targets: el,
+        delay,
+        scale: [1, 0.2],
+        rotate: 720,
+        duration: 700,
+        easing: "easeInBack"
+      });
     }
 
     function yeetToChaos(el, delay = 0) {
@@ -607,7 +667,6 @@
         targets: blackout,
         opacity: [{ value: 1, duration: 900, easing: "easeInOutQuad" }],
         complete: () => {
-          // écran noir + seulement bouton reset
           dangerBtn.style.display = "none";
           infoPanel.classList.add("hidden");
           resetBtn.style.display = "block";
@@ -619,63 +678,61 @@
       if (dangerUsed) return;
       dangerUsed = true;
 
-      // stop tout
       stopAllSounds();
       systemPaused = true;
       planetOrbits.forEach(o => o.anim.pause());
       moonAnim.pause();
 
-      // cacher UI (mais pas encore le reset)
+      // cache l'UI
       infoPanel.classList.add("hidden");
+      // orbites off
+      orbitElements.forEach(o => o.style.display = "none");
+      orbitsVisible = false;
 
-      // glitch + shake + flash
+      // effet caméra
       space.classList.add("glitch");
       space.classList.add("shake");
       setTimeout(() => space.classList.remove("shake"), 380);
 
       flashWhite();
 
-      // On force les orbites off visuellement (optionnel)
-      orbitElements.forEach(o => o.style.display = "none");
-      orbitsVisible = false;
+      // aspiration rapide
+      planets.forEach((p, i) => setTimeout(() => suckIntoSun(p), i * 80));
+      setTimeout(() => suckIntoSun(moon), 240);
+      setTimeout(() => suckIntoSun(sun), 260);
 
-      // Explosion soleil + particules
-      spawnParticlesAround(sun, 80);
-      yeetToChaos(sun, 0);
-
-      // Planètes partent en vrille en cascade
-      planets.forEach((p, i) => {
-        setTimeout(() => {
-          spawnParticlesAround(p, 45);
-          yeetToChaos(p, 0);
-        }, 120 + i * 90);
-      });
-
-      // Lune aussi
+      // BOOM
       setTimeout(() => {
-        spawnParticlesAround(moon, 28);
-        yeetToChaos(moon, 0);
-      }, 260);
+        explosionSound.currentTime = 0;
+        explosionSound.play().catch(()=>{});
 
-      // Dernier mega flash puis noir total
-      setTimeout(() => {
+        shockwaveExplosion();
         flashWhite();
-      }, 900);
 
-      setTimeout(() => {
-        fadeToBlackEnd();
-      }, 1400);
+        spawnParticlesAround(sun, 120);
+        yeetToChaos(sun);
+
+        planets.forEach((p, i) => {
+          setTimeout(() => {
+            spawnParticlesAround(p, 70);
+            yeetToChaos(p);
+          }, i * 60);
+        });
+
+        spawnParticlesAround(moon, 45);
+        yeetToChaos(moon);
+      }, 800);
+
+      // noir final
+      setTimeout(() => fadeToBlackEnd(), 1600);
     }
 
     dangerBtn.addEventListener("click", dangerSequence);
 
-    /* ===== RESET ===== */
-    resetBtn.addEventListener("click", () => {
-      // reset ultra fiable : recharge la page
-      window.location.reload();
-    });
+    /* RESET */
+    resetBtn.addEventListener("click", () => window.location.reload());
 
-    // état initial
+    // init
     applyZoom();
   </script>
 </body>
